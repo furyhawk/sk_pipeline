@@ -1,0 +1,13 @@
+cryptography
+joblib
+notebook
+matplotlib
+numpy
+pandas
+psutil
+scikit-learn==1.1
+scikit-optimize
+scipy
+seaborn
+threadpoolctl
+xgboost
