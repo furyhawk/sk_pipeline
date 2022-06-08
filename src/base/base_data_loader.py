@@ -2,7 +2,21 @@ from sklearn.model_selection import train_test_split
 from sklearn.utils import shuffle as shuffle_data
 
 class BaseDataLoader():
+
     def __init__(self, data_handler, shuffle, test_split, random_state, stratify, training):
+        """ Split dataset based on the following parameters
+
+        Args:
+            data_handler (object): 
+            shuffle (boolean): shuffle dataset
+            test_split (float): test split %
+            random_state (int): random_state
+            stratify (boolean): stratify
+            training (boolean): if training route
+
+        Raises:
+            ValueError: data_handler not configured properly
+        """        
         dh = data_handler
 
         if dh.X_data_test is dh.y_data_test is None:

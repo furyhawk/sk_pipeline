@@ -3,6 +3,10 @@ import collections
 
 from utils.parse_config import ConfigParser
 import data_loaders.data_loaders as data_loaders_
+import models.models as models_
+
+import sklearn.model_selection as model_selection_
+
 
 def main(config):
     """Main App
@@ -14,6 +18,8 @@ def main(config):
     # Load X, y
     data_loader = config.init_obj(
         'data_loader', data_loaders_, **{'training': True, 'label_name': config['label_name']})
+    model = config.init_obj('model', models_).created_model()
+    cross_val = config.init_obj('cross_validation', model_selection_)
 
 
 if __name__ == '__main__':
