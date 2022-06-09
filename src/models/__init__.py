@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+from wrappers import *
 from sklearn.svm import SVC
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
@@ -16,6 +17,7 @@ methods_dict = {
     'ridge': Ridge,
     'pf': PolynomialFeatures,
     'scaler': StandardScaler,
+    'PLS': PLSRegressionWrapper,
     'GNB': GaussianNB,
     'SVC': SVC,
     'PCA': PCA,
