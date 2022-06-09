@@ -8,7 +8,7 @@ import models.models as models_
 import optimizers.optimizers as optimizers_
 
 import sklearn.model_selection as model_selection_
-
+import pandas as pd  # data processing, CSV file I/O (e.g. pd.read_csv)
 
 def load_data_optimizer(config):
     # Load X, y
@@ -44,15 +44,33 @@ def main(config):
     Args:
         config (Config): Class object for configurations
     """
+    # 1. Load data and optimizer function
     optim = load_data_optimizer(config)
 
-    # Optimize and train model
+    # 2. Optimize and train model
     if config['train_model']:
         optim.optimize()
     else:
         assert (config['model_dir'] != '') & (config['test_model']
                                               ), 'Without training, maintain config.model_dir with the path to load model.pkl.'
 
+    # 3. Model prediction output
+    if config['test_model']:
+        data_loader = config.init_obj(
+            'data_loader', data_loaders_, **{'training': False, 'label_name': config['label_name']})
+        X_test, y_test = data_loader.get_data()
+        model = optim.load_model()
+        y_pred = model.predict(X_test)
+
+        # X is DataFrame, output X as csv
+        if isinstance(X_test, pd.DataFrame):
+            prediction_df = X_test.copy()
+            prediction_df[config['label_name']] = y_pred
+            test_report = optim.create_test_report(y_test, y_pred)
+            optim.save_report(test_report, 'report_test.txt', prediction_df)
+        else:
+            test_report = optim.create_test_report(y_test, y_pred)
+            optim.save_report(test_report, 'report_test.txt')
 
 if __name__ == '__main__':
 
