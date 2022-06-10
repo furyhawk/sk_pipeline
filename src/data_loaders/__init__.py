@@ -2,6 +2,7 @@
 # coding: utf-8
 
 from dataclasses import dataclass
+
 @dataclass
 class DataHandler:
     X_data: 'DataHandler' = None

@@ -1,9 +1,19 @@
 import os
 import pickle
+import logging
+
 import numpy as np
 import pandas as pd  # data processing, CSV file I/O (e.g. pd.read_csv)
 from abc import abstractmethod
 
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[
+        logging.FileHandler("debug.log"),
+        logging.StreamHandler()
+    ]
+)
 
 class BaseOptimizer():
     def __init__(self, model, data_loader, search_method, config):
@@ -40,10 +50,10 @@ class BaseOptimizer():
             load_path = os.path.join(self.config['model_dir'], "model.pkl")
         else:
             load_path = os.path.join(self.save_dir, "model.pkl")
-        print(f'Loading model from: {load_path}')
+        logging.info(f'Loading model from: {load_path}')
         with open(load_path, 'rb') as f:
             model = pickle.load(f)
-            print(model)
+            logging.info(model)
         return model
 
     def save_report(self, report, name_txt, prediction_df=None):
@@ -55,11 +65,11 @@ class BaseOptimizer():
             prediction_df (Dataframe, optional): Results to be saved. Defaults to None.
         """
         save_path = os.path.join(self.save_dir, name_txt)
-        print(f'Saving report to: {save_path}')
+        logging.info(f'Saving report to: {save_path}')
         if isinstance(prediction_df, pd.DataFrame):
             results_path = os.path.join(self.save_dir, 'prediction.csv')
             prediction_df.to_csv(results_path, index=True)
-            print(f'Saved prediction to: {results_path}')
+            logging.info(f'Saved prediction to: {results_path}')
         with open(save_path, "w") as text_file:
             text_file.write(report)
 
@@ -87,9 +97,9 @@ class BaseOptimizer():
 
             self.model.set_params(**param_grid)
 
-            print("-----------------------------------------------------------------")
-            print("Model architecture:")
-            print("input: {}".format(x.shape))
+            logging.debug("-----------------------------------------------------------------")
+            logging.debug("Model architecture:")
+            logging.debug("input: {}".format(x.shape))
             for layer in self.model:
                 if hasattr(layer, "fit_transform"):
                     x = layer.fit_transform(x, y)
@@ -98,12 +108,12 @@ class BaseOptimizer():
                     x = layer.predict(x)
                 else:
                     x = np.array([])
-                    print(f"Warning: {layer} layer dimensions wrong!")
+                    logging.debug(f"Warning: {layer} layer dimensions wrong!")
 
-                print("layer {}: {}".format(layer, x.shape))
-            print("-----------------------------------------------------------------")
+                logging.debug("layer {}: {}".format(layer, x.shape))
+            logging.debug("-----------------------------------------------------------------")
         else:
-            print("\n Error: Debug option only available for GridSearch")
+            logging.debug("\n Error: Debug option only available for GridSearch")
         quit()
 
     def create_train_report(self, cor):
