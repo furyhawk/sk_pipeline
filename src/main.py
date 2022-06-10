@@ -10,6 +10,7 @@ import optimizers.optimizers as optimizers_
 import sklearn.model_selection as model_selection_
 import pandas as pd  # data processing, CSV file I/O (e.g. pd.read_csv)
 
+
 def load_data_optimizer(config):
     # Load X, y
     data_loader = config.init_obj(
@@ -37,6 +38,7 @@ def load_data_optimizer(config):
                       config=config)
 
     return optim
+
 
 def main(config):
     """Main App
@@ -71,6 +73,7 @@ def main(config):
         else:
             test_report = optim.create_test_report(y_test, y_pred)
             optim.save_report(test_report, 'report_test.txt')
+
 
 if __name__ == '__main__':
 

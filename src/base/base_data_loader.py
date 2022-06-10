@@ -1,7 +1,8 @@
-import logging
-
 from sklearn.model_selection import train_test_split
 from sklearn.utils import shuffle as shuffle_data
+
+from utils.logger import logging
+
 
 class BaseDataLoader():
 
@@ -18,7 +19,7 @@ class BaseDataLoader():
 
         Raises:
             ValueError: data_handler not configured properly
-        """        
+        """
         dh = data_handler
 
         if dh.X_data_test is dh.y_data_test is None:
@@ -30,26 +31,28 @@ class BaseDataLoader():
                                                                     random_state=random_state,
                                                                     shuffle=shuffle,
                                                                     stratify=stratify)
-                self.X_out, self.y_out = (X_train, y_train) if training else (X_test, y_test)
-                logging.info("Training and test sets created regarding defined test_split percentage.")
+                self.X_out, self.y_out = (
+                    X_train, y_train) if training else (X_test, y_test)
+                logging.info(
+                    "Training and test sets created regarding defined test_split percentage.")
             else:
                 self.X_out, self.y_out = dh.X_data, dh.y_data
                 if shuffle:
-                    self.X_out, self.y_out = shuffle_data(self.X_out, self.y_out, random_state=random_state)
+                    self.X_out, self.y_out = shuffle_data(
+                        self.X_out, self.y_out, random_state=random_state)
                 logging.info("Whole dataset is used for training.")
 
         elif dh.X_data_test is not None and dh.y_data_test is not None:
             self.X_out, self.y_out = (dh.X_data, dh.y_data) if training \
-                            else (dh.X_data_test, dh.y_data_test)
+                else (dh.X_data_test, dh.y_data_test)
             if shuffle:
-                self.X_out, self.y_out = shuffle_data(self.X_out, self.y_out, random_state=random_state)
-            logging.info("For training and testing separate datasets configured in data_handler will be used.")
+                self.X_out, self.y_out = shuffle_data(
+                    self.X_out, self.y_out, random_state=random_state)
+            logging.info(
+                "For training and testing separate datasets configured in data_handler will be used.")
         else:
             raise ValueError('data_handler not configured properly.')
 
     def get_data(self):
         logging.info(f"Number of loaded data instances: {len(self.X_out)}")
         return self.X_out, self.y_out
-
-
-

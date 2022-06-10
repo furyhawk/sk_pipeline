@@ -1,19 +1,12 @@
 import os
 import pickle
-import logging
 
 import numpy as np
 import pandas as pd  # data processing, CSV file I/O (e.g. pd.read_csv)
 from abc import abstractmethod
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s",
-    handlers=[
-        logging.FileHandler("debug.log"),
-        logging.StreamHandler()
-    ]
-)
+from utils.logger import logging
+
 
 class BaseOptimizer():
     def __init__(self, model, data_loader, search_method, config):
@@ -97,7 +90,8 @@ class BaseOptimizer():
 
             self.model.set_params(**param_grid)
 
-            logging.debug("-----------------------------------------------------------------")
+            logging.debug(
+                "-----------------------------------------------------------------")
             logging.debug("Model architecture:")
             logging.debug("input: {}".format(x.shape))
             for layer in self.model:
@@ -111,9 +105,11 @@ class BaseOptimizer():
                     logging.debug(f"Warning: {layer} layer dimensions wrong!")
 
                 logging.debug("layer {}: {}".format(layer, x.shape))
-            logging.debug("-----------------------------------------------------------------")
+            logging.debug(
+                "-----------------------------------------------------------------")
         else:
-            logging.debug("\n Error: Debug option only available for GridSearch")
+            logging.debug(
+                "\n Error: Debug option only available for GridSearch")
         quit()
 
     def create_train_report(self, cor):

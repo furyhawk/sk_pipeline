@@ -44,11 +44,7 @@ class ConfigParser:
         if not isinstance(args, tuple):
             args = args.parse_args()
 
-        print(args)
         msg_no_cfg = "Configuration file need to be specified. Add '-c config.json', for example."
-
-        # if args.config is None:
-        #     args.config = 'src/configs/config_test.json'
 
         assert args.config is not None, msg_no_cfg
         cfg_fname = Path(args.config)
