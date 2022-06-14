@@ -1,25 +1,30 @@
 {
     "name": "Classification",
-
     "model": {
         "type": "Model",
         "args": {
-            "pipeline": ["scaler", "PLS", "pf", "SVC"],
-            "unions": {
-            }
+            "pipeline": [
+                "scaler",
+                "KClass"
+            ],
+            "unions": {}
         }
     },
-
-    "tuned_parameters":[{
-                        "SVC__kernel": ["rbf"],
-                        "SVC__gamma": [1e-5, 1e-6, 1],
-                        "SVC__C": [1, 100, 1000],
-                        "PLS__n_components": [1,2,3]
-                    }],
-
+    "tuned_parameters": [
+        {
+            "KClass__hidden_layer_dim": [
+                50, 100, 200
+            ],
+            "KClass__loss": [
+                "sparse_categorical_crossentropy"
+            ],
+            "KClass__optimizer__learning_rate": [
+                0.0001, 0.001, 0.1
+            ]
+        }
+    ],
     "optimizer": "OptimizerClassification",
-
-    "search_method":{
+    "search_method": {
         "type": "GridSearchCV",
         "args": {
             "refit": false,
@@ -28,32 +33,29 @@
             "error_score": 0
         }
     },
-
     "cross_validation": {
         "type": "RepeatedStratifiedKFold",
         "args": {
             "n_splits": 5,
-            "n_repeats": 10,
-            "random_state": 1
+            "n_repeats": 5,
+            "random_state": 42
         }
     },
-
     "data_loader": {
         "type": "TestClassification",
-        "args":{
-            "data_path": "data/path-to-file",
+        "args": {
+            "data_path": "",
             "shuffle": true,
             "test_split": 0.2,
             "stratify": true,
-            "random_state":1
+            "random_state": 42
         }
     },
-    "label_name": "",
+    "label_name": "Survive",
     "score": "max balanced_accuracy",
     "train_model": true,
     "test_model": true,
     "debug": false,
     "save_dir": "saved/",
     "model_dir": ""
-
 }

@@ -1,3 +1,4 @@
+autopep8
 cryptography
 joblib
 notebook
@@ -5,9 +6,11 @@ matplotlib
 numpy
 pandas
 psutil
-scikit-learn==1.1
+scikit-learn
 scikit-optimize
+scikeras
 scipy
 seaborn
+tensorflow-cpu
 threadpoolctl
 xgboost

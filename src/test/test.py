@@ -1,18 +1,15 @@
-from sklearn.cross_decomposition import PLSRegression
-
+import numpy as np
+from sklearn.datasets import make_classification
 from tensorflow import keras
+
 from scikeras.wrappers import KerasClassifier
 
 
-class PLSRegressionWrapper(PLSRegression):
-    def transform(self, X):
-        return super().transform(X)
+X, y = make_classification(1000, 20, n_informative=10, random_state=0)
+X = X.astype(np.float32)
+y = y.astype(np.int64)
 
-    def fit_transform(self, X, Y):
-        return self.fit(X, Y).transform(X)
-
-
-def createKerasClassificationWrapper(hidden_layer_dim, meta):
+def get_model(hidden_layer_dim, meta):
     # note that meta is a special argument that will be
     # handed a dict containing input metadata
     n_features_in_ = meta["n_features_in_"]
@@ -28,9 +25,11 @@ def createKerasClassificationWrapper(hidden_layer_dim, meta):
     model.add(keras.layers.Activation("softmax"))
     return model
 
-
-KerasClassification = KerasClassifier(
-    createKerasClassificationWrapper,
+clf = KerasClassifier(
+    get_model,
     loss="sparse_categorical_crossentropy",
     hidden_layer_dim=100,
 )
+
+clf.fit(X, y)
+y_proba = clf.predict_proba(X)

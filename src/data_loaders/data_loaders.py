@@ -1,7 +1,8 @@
 from base import BaseDataLoader
 from data_loaders import data_handler
 
-from sklearn.datasets import load_iris
+from sklearn.datasets import load_iris, make_classification
+import numpy as np
 
 class TestClassification(BaseDataLoader):
     """Test case for classification pipeline
@@ -12,5 +13,17 @@ class TestClassification(BaseDataLoader):
         X, y = load_iris(return_X_y=True)
         data_handler.X_data = X
         data_handler.y_data = y
+
+        super().__init__(data_handler, shuffle, test_split, random_state, stratify, training)
+
+class TestKerasClassification(BaseDataLoader):
+    """Test case for keras classification pipeline
+    """    
+    def __init__(self, data_path, shuffle, test_split, random_state, stratify, training, label_name):
+        '''set data_path in configs if data localy stored'''
+
+        X, y = make_classification(1000, 20, n_informative=10, random_state=0)
+        data_handler.X_data = X.astype(np.float32)
+        data_handler.y_data = y.astype(np.int64)
 
         super().__init__(data_handler, shuffle, test_split, random_state, stratify, training)

@@ -19,6 +19,7 @@ methods_dict = {
     'pf': PolynomialFeatures,
     'scaler': StandardScaler,
     'PLS': PLSRegressionWrapper,
+    'KClass': KerasClassification,
     'GNB': GaussianNB,
     'SVC': SVC,
     'PCA': PCA,

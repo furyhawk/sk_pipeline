@@ -11,7 +11,7 @@
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
-            "args": ["-c", "src/configs/config_test_classification.json"],
+            "args": ["-c", "src/configs/config_test.json"],
             "justMyCode": false
         }
     ]

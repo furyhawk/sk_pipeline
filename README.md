@@ -9,15 +9,22 @@ For local setup, I recommend to use [Miniconda](https://docs.conda.io/en/latest/
 After installation of Anaconda/Miniconda, run the following command(s) from the project directory:
 
 ### Requirements
-* Python >= `3.10`
+* Python >= `3.9`
 * Packages included in `requirements.txt` file
 * (Anaconda for easy installation)
 
 ### Install dependencies
+Conda virtual environment:
 ```sh
-conda create --name myenv python=3.10
+conda create --name myenv python=3.9
 conda activate myenv
 conda install --file requirements.txt -c conda-forge
+```
+
+or activate your virtual environment and install the dependencies using
+
+```sh
+pip install -r requirements.txt
 ```
 
 ## Usage
@@ -33,5 +40,5 @@ or
 
 ```sh
 cd src/
-python3 main.py -c configs/config_xgb.json
+python3 main.py -c configs/config_test.json
 ```
