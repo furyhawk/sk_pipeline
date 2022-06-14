@@ -1,20 +1,15 @@
-from typing import Dict, Any
-from scikeras.wrappers import KerasClassifier
-from sklearn.cross_decomposition import PLSRegression
-
-import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+from sklearn.datasets import make_classification
+from typing import Dict, Iterable, Any
 from tensorflow import keras
+from scikeras.wrappers import KerasClassifier, KerasRegressor
+import numpy as np
+import warnings
+from tensorflow import get_logger
+get_logger().setLevel('ERROR')
+warnings.filterwarnings("ignore", message="Setting the random state for TF")
 
-class PLSRegressionWrapper(PLSRegression):
-    def transform(self, X):
-        return super().transform(X)
 
-    def fit_transform(self, X, Y):
-        return self.fit(X, Y).transform(X)
-
-
-class MLPClass(KerasClassifier):
+class MLPClassifier(KerasClassifier):
 
     def __init__(
         self,
@@ -53,3 +48,11 @@ class MLPClass(KerasClassifier):
         model.add(out)
         model.compile(loss=loss, optimizer=compile_kwargs["optimizer"])
         return model
+
+
+X, y = make_classification()
+
+clf = MLPClassifier(epochs=20)  # for notebook execution time
+
+# check score
+print(clf.fit(X, y).score(X, y))

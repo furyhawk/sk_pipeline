@@ -5,20 +5,17 @@
         "args": {
             "pipeline": [
                 "scaler",
-                "KClass"
+                "MLPClass"
             ],
             "unions": {}
         }
     },
     "tuned_parameters": [
         {
-            "KClass__hidden_layer_dim": [
-                50, 100, 200
+            "MLPClass__hidden_layer_sizes": [
+                [50], [100], [200]
             ],
-            "KClass__loss": [
-                "sparse_categorical_crossentropy"
-            ],
-            "KClass__optimizer__learning_rate": [
+            "MLPClass__optimizer__learning_rate": [
                 0.0001, 0.001, 0.1
             ]
         }
@@ -42,7 +39,7 @@
         }
     },
     "data_loader": {
-        "type": "TestClassification",
+        "type": "TestKerasClassification",
         "args": {
             "data_path": "",
             "shuffle": true,

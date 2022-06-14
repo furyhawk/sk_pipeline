@@ -4,15 +4,29 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
         {
-            "name": "Python: Current File",
+            "name": "Python: Test MLP",
             "type": "python",
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
-            "args": ["-c", "src/configs/config_test.json"],
-            "justMyCode": false
+            "args": [
+                "-c",
+                "src/configs/config_test_MLP_classification.json"
+            ],
+            "justMyCode": true
+        },
+        {
+            "name": "Python: Test classification",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args": [
+                "-c",
+                "src/configs/config_test_classification.json"
+            ],
+            "justMyCode": true
         }
     ]
 }
