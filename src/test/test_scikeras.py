@@ -14,7 +14,7 @@ class MLPClassifier(KerasClassifier):
     def __init__(
         self,
         hidden_layer_sizes=(100,),
-        optimizer="adam",
+        optimizer=keras.optimizers.legacy.Adam,
         optimizer__learning_rate=0.001,
         epochs=200,
         verbose=0,
