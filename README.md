@@ -30,15 +30,7 @@ pip install -r requirements.txt
 ## Usage
 Activate and install the correct python3 env before proceeding.
 
-This will run the Survive classification task using XGBoost:
-```sh
-chmod +x run.sh
-./run.sh
-```
-
-or
-
 ```sh
 cd src/
-python3 main.py -c configs/config_test.json
+python3 main.py -c configs/config_test_classification.json
 ```

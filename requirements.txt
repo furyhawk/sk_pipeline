@@ -1,16 +1,10 @@
-autopep8
-cryptography
-joblib
-notebook
 matplotlib
 numpy
 pandas
-psutil
 scikit-learn
 scikit-optimize
 scikeras
 scipy
 seaborn
-tensorflow-cpu
-threadpoolctl
+tensorflow
 xgboost
