@@ -16,9 +16,9 @@ class OptimizerClassification(BaseOptimizer):
         params = np.array(clf_results["params"])
         means = clf_results["mean_test_score"]
 
-        if self.mnt == 'min':
+        if self.mnt == "min":
             sort_idx = np.argsort(means)
-        if self.mnt == 'max':
+        if self.mnt == "max":
             sort_idx = np.argsort(means)[::-1]
 
         params_sorted = params[sort_idx]
@@ -28,7 +28,7 @@ class OptimizerClassification(BaseOptimizer):
         return self.model
 
     def create_train_report(self, cor):
-        """ Create report
+        """Create report
 
         Args:
             cor (_type_): fit results
@@ -44,9 +44,9 @@ class OptimizerClassification(BaseOptimizer):
         means = clf_results["mean_test_score"]
         stds = clf_results["std_test_score"]
 
-        if self.mnt == 'min':
+        if self.mnt == "min":
             sort_idx = np.argsort(means)
-        if self.mnt == 'max':
+        if self.mnt == "max":
             sort_idx = np.argsort(means)[::-1]
 
         indexes = np.arange(len(means))
@@ -57,9 +57,12 @@ class OptimizerClassification(BaseOptimizer):
         params_sorted = params[sort_idx]
 
         train_report = f"###   Optimizing for {self.scoring}   ###\n\n"
-        for idx, mean, std, params_ in zip(indexes_sorted, means_sorted, stds_sorted, params_sorted):
-            logging.info("%d   %0.3f (+/-%0.03f) for %r"
-                         % (idx, mean, std * 2, params_))
+        for idx, mean, std, params_ in zip(
+            indexes_sorted, means_sorted, stds_sorted, params_sorted
+        ):
+            logging.info(
+                "%d   %0.3f (+/-%0.03f) for %r" % (idx, mean, std * 2, params_)
+            )
             train_report += f"{mean:.3f}  +/-{std*2:.3f}  for  {params_}\n"
         train_report += f"\n###   Best model:   ###\n\n {str(self.model)}"
         train_report += f"\n Number of samples used for training: {len(self.y_train)}"
@@ -89,9 +92,9 @@ class OptimizerRegression(BaseOptimizer):
         params = np.array(clf_results["params"])
         means = clf_results["mean_test_score"]
 
-        if self.mnt == 'min':
+        if self.mnt == "min":
             sort_idx = np.argsort(means)
-        if self.mnt == 'max':
+        if self.mnt == "max":
             sort_idx = np.argsort(means)[::-1]
 
         params_sorted = params[sort_idx]
@@ -109,9 +112,9 @@ class OptimizerRegression(BaseOptimizer):
         means = clf_results["mean_test_score"]
         stds = clf_results["std_test_score"]
 
-        if self.mnt == 'min':
+        if self.mnt == "min":
             sort_idx = np.argsort(means)
-        if self.mnt == 'max':
+        if self.mnt == "max":
             sort_idx = np.argsort(means)[::-1]
 
         indexes = np.arange(len(means))
@@ -122,9 +125,12 @@ class OptimizerRegression(BaseOptimizer):
         params_sorted = params[sort_idx]
 
         train_report = f"###   Optimizing for {self.scoring}   ###\n\n"
-        for idx, mean, std, params_ in zip(indexes_sorted, means_sorted, stds_sorted, params_sorted):
-            logging.info("%d   %0.3f (+/-%0.03f) for %r"
-                         % (idx, mean, std * 2, params_))
+        for idx, mean, std, params_ in zip(
+            indexes_sorted, means_sorted, stds_sorted, params_sorted
+        ):
+            logging.info(
+                "%d   %0.3f (+/-%0.03f) for %r" % (idx, mean, std * 2, params_)
+            )
             train_report += f"{mean:.3f}  +/-{std*2:.3f}  for  {params_}\n"
         train_report += f"\n###   Best model:   ###\n\n {str(self.model)}"
         train_report += f"\n Number of samples used for training: {len(self.y_train)}"

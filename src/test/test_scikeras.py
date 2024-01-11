@@ -5,15 +5,15 @@ from scikeras.wrappers import KerasClassifier, KerasRegressor
 import numpy as np
 import warnings
 from tensorflow import get_logger
-get_logger().setLevel('ERROR')
+
+get_logger().setLevel("ERROR")
 warnings.filterwarnings("ignore", message="Setting the random state for TF")
 
 
 class MLPClassifier(KerasClassifier):
-
     def __init__(
         self,
-        hidden_layer_sizes=(100, ),
+        hidden_layer_sizes=(100,),
         optimizer="adam",
         optimizer__learning_rate=0.001,
         epochs=200,
@@ -42,8 +42,7 @@ class MLPClassifier(KerasClassifier):
             output_activation = "softmax"
             loss = "sparse_categorical_crossentropy"
         else:
-            raise NotImplementedError(
-                f"Unsupported task type: {self.target_type_}")
+            raise NotImplementedError(f"Unsupported task type: {self.target_type_}")
         out = keras.layers.Dense(n_output_units, activation=output_activation)
         model.add(out)
         model.compile(loss=loss, optimizer=compile_kwargs["optimizer"])

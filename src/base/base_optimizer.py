@@ -8,7 +8,7 @@ from abc import abstractmethod
 from utils.logger import logging
 
 
-class BaseOptimizer():
+class BaseOptimizer:
     def __init__(self, model, data_loader, search_method, config):
         self.X_train, self.y_train = data_loader.get_data()
         self.model = model
@@ -29,7 +29,7 @@ class BaseOptimizer():
             model (BaseModel): Model to be saved in binary format
         """
         save_path = os.path.join(self.save_dir, "model.pkl")
-        with open(save_path, 'wb') as f:
+        with open(save_path, "wb") as f:
             pickle.dump(model, f)
 
     def load_model(self):
@@ -39,12 +39,12 @@ class BaseOptimizer():
         Returns:
             BaseModel: Model to be used for prediction task
         """
-        if self.config['model_dir']:
-            load_path = os.path.join(self.config['model_dir'], "model.pkl")
+        if self.config["model_dir"]:
+            load_path = os.path.join(self.config["model_dir"], "model.pkl")
         else:
             load_path = os.path.join(self.save_dir, "model.pkl")
-        logging.info(f'Loading model from: {load_path}')
-        with open(load_path, 'rb') as f:
+        logging.info(f"Loading model from: {load_path}")
+        with open(load_path, "rb") as f:
             model = pickle.load(f)
             logging.info(model)
         return model
@@ -58,11 +58,11 @@ class BaseOptimizer():
             prediction_df (Dataframe, optional): Results to be saved. Defaults to None.
         """
         save_path = os.path.join(self.save_dir, name_txt)
-        logging.info(f'Saving report to: {save_path}')
+        logging.info(f"Saving report to: {save_path}")
         if isinstance(prediction_df, pd.DataFrame):
-            results_path = os.path.join(self.save_dir, 'prediction.csv')
+            results_path = os.path.join(self.save_dir, "prediction.csv")
             prediction_df.to_csv(results_path, index=True)
-            logging.info(f'Saved prediction to: {results_path}')
+            logging.info(f"Saved prediction to: {results_path}")
         with open(save_path, "w") as text_file:
             text_file.write(report)
 
@@ -91,7 +91,8 @@ class BaseOptimizer():
             self.model.set_params(**param_grid)
 
             logging.debug(
-                "-----------------------------------------------------------------")
+                "-----------------------------------------------------------------"
+            )
             logging.debug("Model architecture:")
             logging.debug("input: {}".format(x.shape))
             for layer in self.model:
@@ -106,21 +107,21 @@ class BaseOptimizer():
 
                 logging.debug("layer {}: {}".format(layer, x.shape))
             logging.debug(
-                "-----------------------------------------------------------------")
+                "-----------------------------------------------------------------"
+            )
         else:
-            logging.debug(
-                "\n Error: Debug option only available for GridSearch")
+            logging.debug("\n Error: Debug option only available for GridSearch")
         quit()
 
     def create_train_report(self, cor):
-        '''Should return report from training'''
+        """Should return report from training"""
         return "Train report not configured."
 
     def create_test_report(self, y_test, y_pred):
-        '''Should return report from testing'''
+        """Should return report from testing"""
         return "Test report not configured."
 
     @abstractmethod
     def fitted_model(self, cor):
-        '''Should return fitted model'''
+        """Should return fitted model"""
         raise NotImplementedError

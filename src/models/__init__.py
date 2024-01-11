@@ -15,14 +15,14 @@ from sklearn.neural_network import MLPClassifier
 from xgboost import XGBClassifier
 
 methods_dict = {
-    'ridge': Ridge,
-    'pf': PolynomialFeatures,
-    'scaler': StandardScaler,
-    'PLS': PLSRegressionWrapper,
-    'MLPClass': MLPClass,
-    'GNB': GaussianNB,
-    'SVC': SVC,
-    'PCA': PCA,
-    'MLP': MLPClassifier,
-    'XGB': XGBClassifier,
+    "ridge": Ridge,
+    "pf": PolynomialFeatures,
+    "scaler": StandardScaler,
+    "PLS": PLSRegressionWrapper,
+    "MLPClass": MLPClass,
+    "GNB": GaussianNB,
+    "SVC": SVC,
+    "PCA": PCA,
+    "MLP": MLPClassifier,
+    "XGB": XGBClassifier,
 }

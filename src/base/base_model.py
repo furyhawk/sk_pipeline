@@ -3,11 +3,10 @@ from models import methods_dict
 from sklearn.pipeline import FeatureUnion
 
 
-class BaseModel():
-
+class BaseModel:
     @abstractmethod
     def created_model(self):
-        '''should return created model'''
+        """should return created model"""
         return NotImplementedError
 
     def create_steps(self, pipeline, unions):
